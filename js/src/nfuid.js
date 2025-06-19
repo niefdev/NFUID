@@ -82,16 +82,30 @@ class NFUID {
     return result;
   }
 
-  // Generates a random BigInt of the specified bit length
   #generateRandomBits(bits) {
+    const crypto = globalThis.crypto || require('crypto');
     const bytes = Math.ceil(bits / 8);
-    const buffer = new Uint8Array(bytes);
-    crypto.getRandomValues(buffer);
-    let value = 0n;
-    for (const byte of buffer) {
-      value = (value << 8n) | BigInt(byte);
+
+    if (crypto.getRandomValues) {
+      // Browser
+      const buffer = new Uint8Array(bytes);
+      crypto.getRandomValues(buffer);
+      let value = 0n;
+      for (const byte of buffer) {
+        value = (value << 8n) | BigInt(byte);
+      }
+      return value & ((1n << BigInt(bits)) - 1n);
+    } else if (crypto.randomBytes) {
+      // Node.js
+      const buffer = crypto.randomBytes(bytes);
+      let value = 0n;
+      for (const byte of buffer) {
+        value = (value << 8n) | BigInt(byte);
+      }
+      return value & ((1n << BigInt(bits)) - 1n);
+    } else {
+      throw new Error("No secure random source available.");
     }
-    return value & ((1n << BigInt(bits)) - 1n);
   }
 
   generate() {
