@@ -1,0 +1,25 @@
+{
+    "name": "niefdev/nfuid",
+    "description": "Minimal 11-character URL-safe unique ID generator with hidden mode and timestamp-based structure.",
+    "type": "library",
+    "keywords": ["id", "unique-id", "short-id", "uuid", "identifier", "base64", "timestamp", "url-safe", "nfuid"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "niefdev",
+            "email": "niefdev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "files": ["nfuid.php"]
+    },
+    "support": {
+        "issues": "https://github.com/niefdev/nfuid/issues",
+        "source": "https://github.com/niefdev/nfuid"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
